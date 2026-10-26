@@ -301,3 +301,11 @@ accuracy 對 FP 的差、每 tensor 誤差、total/active/stall cycles、
 量化容許門檻在測試前由產品 owner 固定，不能測完再挑好看的門檻。
 scoreboard 不複用 DUT arithmetic；raw coverage、seed、waiver 一起保存。
 本輪只交付 source inspection 與離線算術，沒有 RTL PASS 或 PPA 數字。
+
+## 跨 repo 審查連結
+
+- [SoC／來源合約 PR #9](https://github.com/tonythetiger168/orca-v63/pull/9)
+- [NPU 架構 PR #1](https://github.com/tonythetiger168/orca-ai-accelerators/pull/1)
+- [OH1 評估 PR #1](https://github.com/tonythetiger168/openhelix-oh1/pull/1)
+
+這些均為 draft；設計尚未合併，不表示consumer已同意。
