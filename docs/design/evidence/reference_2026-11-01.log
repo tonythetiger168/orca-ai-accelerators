@@ -1,0 +1,17 @@
+test_bias_applied_once (test_edge_npu_reference.ReferenceTests.test_bias_applied_once) ... ok
+test_bias_length_and_overflow (test_edge_npu_reference.ReferenceTests.test_bias_length_and_overflow) ... ok
+test_integer_and_operand_bounds (test_edge_npu_reference.ReferenceTests.test_integer_and_operand_bounds) ... ok
+test_matrix_shape_errors (test_edge_npu_reference.ReferenceTests.test_matrix_shape_errors) ... ok
+test_non_square_tail_and_bias (test_edge_npu_reference.ReferenceTests.test_non_square_tail_and_bias) ... ok
+test_per_channel_scale (test_edge_npu_reference.ReferenceTests.test_per_channel_scale) ... ok
+test_positive_negative_halfway (test_edge_npu_reference.ReferenceTests.test_positive_negative_halfway) ... ok
+test_rounding_against_exact_rational (test_edge_npu_reference.ReferenceTests.test_rounding_against_exact_rational) ... ok
+test_saturation_and_quantized_relu (test_edge_npu_reference.ReferenceTests.test_saturation_and_quantized_relu) ... ok
+test_scale_and_clamp_errors (test_edge_npu_reference.ReferenceTests.test_scale_and_clamp_errors) ... ok
+test_shift_and_int64_limits (test_edge_npu_reference.ReferenceTests.test_shift_and_int64_limits) ... ok
+test_signed_endpoints (test_edge_npu_reference.ReferenceTests.test_signed_endpoints) ... ok
+
+----------------------------------------------------------------------
+Ran 12 tests in 0.006s
+
+OK

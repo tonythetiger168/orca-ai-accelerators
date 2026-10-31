@@ -3,6 +3,19 @@
 日期：2026-10-26，Asia/Taipei。狀態：design，待 G1 合約審查。
 本文件是設計交付；本輪未修改 RTL，未跑模型或合成／STA／板級測試。
 
+## 2026-11-01 後續修訂（優先於下方歷史草案）
+
+CPU PR #1現有rtl/npu/ backend與APB共用表頭已另有實作；
+優先評估X1-Nano重用，E8/E64保留為隔離試算。
+下方CSR table與128B descriptors尚未被採納，禁止直接當現有APB driver ABI。
+詳見[來源／合約跟進](https://github.com/tonythetiger168/orca-v63/pull/9)。
+
+host arithmetic reference已加入tools/reference/，12個unittest通過，
+包含4635個Fraction rounding交叉核對點；非RTL／模型端到端驗證。
+bias語意修訂：GEMM的INT32結果含一次bias，RESCALE不再加bias。
+因此以下「acc32＋bias32」只表示完整數學流程，不可重複套bias。
+尚無importer/compiler/runtime/kernel driver、accuracy或PPA的新驗收結果。
+
 ## 來源與現況
 
 - orca-v63: `3d66ab0c9b16a4a35907d7729cafe3abebec379a`
