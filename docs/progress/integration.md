@@ -1,7 +1,42 @@
 # Integration — ORCA CPU／NPU／TV-STB-IPCAM
 
-更新：2026-11-01 15:14（Asia/Taipei）。ETA：未知。
+更新：2026-11-01 15:24（Asia/Taipei）。ETA：未知。
 此檔由本工作維護，供中央每小時讀取；不新增排程、不跨聊天發訊。
+
+## 2026-11-01 15:24 — 81檔候選結構探測與隔離提案
+
+- 已追蹤總repo含真實CPU/NPU instances的有界結構探測及隔離提案。
+- baseline 11E/366W、compat 0E/360W；兩者產品gate仍BLOCKED。
+- 不將NoC/cache/DDR未接通的module階層或host golden當NPU系統完成。
+- NPU外部grant/rvalid仍接0；APB UVM接入與獨立scoreboard合約不變。
+
+|階段|本次狀態|
+|---|---|
+|design|source closure、宣告/清單提案與整合阻塞已寫可審查文件|
+|RTL|沒有修改upstream CPU/NPU RTL；compat是run-dir內的review proposal|
+|verified|83 blobs核對、兩模式elaboration diagnostics/child exits與階層一致性已實測|
+|verified|未做CPU/RTL simulation、UVM、DUT功能mutation或formal equivalence|
+|physical|未做；全產品及六類coverage維持BLOCKED/NOT_RUN|
+
+真實執行：
+python tools/probe_soc_structure.py --candidate-root <fixed sources>
+--run-dir <work run-dir> --mode baseline/compat（參數放同一行）。
+run_exit_evidence.json捕獲兩個child的真實2/4；捕獲程序exit0只表示記錄成功。
+raw diagnostics、reports與hierarchy hash在總repodocs/design/soc_crv/structure_probe/。
+full-default配置仍未跑；本次不是完整TV/STB/IPCAM SoC驗收。
+
+阻塞：CPU宣告/舊單元語法的upstream修訂仍待owner審查；
+noc_out_ready_i未接、CPU NoC TX/cache/memory與DDR/PHY鏈未完成，
+NPU外部grant仍接0；full SKU/config/OS/media/security與UVM工具/環境未完成。
+下一步：source owner審查提案及接線缺口；platform可先以CTRL_S0實作UVM
+agent/RAL/獨立scoreboard/direct smoke，再做CRV/功能mutations/raw DB。
+ETA未知；不靠stub/TLM/waiver縮分母達100%，不合併不同fingerprint的結果。
+
+更新前head：`be8978e59d19b684d54dce5863ad4377febfcc39`。
+本次commit由本檔所在commit/PR head識別；繼續codex分支/draft PR，
+不改main、不付費、不另建排程、不跨聊天發訊。
+
+以下15:14紀錄保留為歷史，較新狀態以上方更新為準。
 
 ## 2026-11-01 15:14 — SoC slice／CRV-UVM gate更新
 
@@ -101,5 +136,6 @@ SVA attempts、antecedent、non-vacuous pass與cover witness分開，assertion�
 
 中央下一次每小時巡檢應比較source hash／PR head／review／test結果，
 有實際進展再更新對應階段；本檔不冒稱持續執行或已完成產品驗收。
+
 
 
