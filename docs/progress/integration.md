@@ -1,7 +1,52 @@
 # Integration — ORCA CPU／NPU／TV-STB-IPCAM
 
-更新：2026-11-01 15:04（Asia/Taipei）。ETA：未知。
+更新：2026-11-01 15:14（Asia/Taipei）。ETA：未知。
 此檔由本工作維護，供中央每小時讀取；不新增排程、不跨聊天發訊。
+
+## 2026-11-01 15:14 — SoC slice／CRV-UVM gate更新
+
+- docs/design/soc_uvm_integration_contract.md：
+  NPU的APB/64B memory/command/completion-ID與epoch、獨立golden、
+  GEMM/DMA/VEC/reset/mutation campaigns及逐config coverage合約。
+- NPU未加入CTRL_S0；不把host12 tests或控制面elaboration當NPU UVM通過。
+- platform接shared UVM agents/RAL/virtual sequence/scoreboard/adapters，
+  本工作不寫中央verification/目錄或重複實作其元件。
+
+|階段|本輪真實狀態|
+|---|---|
+|design|共用CRV/UVM合約、E0-E5 gates與缺IP責任已交付，產品config未凍結|
+|RTL|僅總repo新增有界控制面wrapper；沒有完整TV/STB/IPCAM SoC RTL|
+|verified|總repoCTRL_S0：pyslang12.1.0，0 errors/7 warnings，未waive|
+|verified|source gate6 tests通過；非DUT功能mutation、非UVM/coverage|
+|physical|未做；全產品CPU/DDR/PHY/CDC/OS/media鏈仍BLOCKED|
+
+六類line/FSM state+arc/toggle/branch/SVA/functional各100%是逐產品/config/scope目標。
+raw/批准排除/effective分母分列；工具不支援/缺RTL不能排除成100%。
+SVA attempts、antecedent、non-vacuous pass與cover witness分開，assertion零失敗。
+只合併同source/config/TB/checker/tool/coverage-options之raw DB；
+沒有raw DB，所有coverage數值維持NOT_RUN，沒有宣稱100%。
+
+實際命令：
+- python tools/elaborate_control_slice.py --candidate-root <pinned source>
+  --report <run-dir>/elaboration_report.json：總repo實測exit0。
+- python -m unittest discover -s tests/integration -p 'test_*.py' -v：
+  設定ORCA_CANDIDATE_ROOT/ORCA_GATE_TEST_WORK後，總repo6 tests exit0。
+- 完整診斷與原始gate test log在總repodocs/design/soc_crv/。
+- 缺Verilator/Icarus/VCS/Xcelium/UVM環境，simulation與六類coverage未跑。
+
+本輪更新前head：`126b2950dfcc965b807b3dc4190b65bd44a805cd`。
+依賴candidate：`c1db39aa2ba58d7be23be66912d9051042369c60`（未合併）。
+本次commit以本檔所在commit/PR head識別；不自動合併、不付費。
+
+下一步與ETA：
+1. platform依合約建立UVM agent/RAL/獨立scoreboard及directed smoke；ETA未知。
+2. 建立支援六類metrics的sim工具/DB adapter及native FSM extraction；ETA未知。
+3. 先跑CTRL_S0合法/錯誤/重置CRV與DUT功能mutations，再依hole追加seed；
+   未跑不填PASS；ETA未知。
+4. TV/STB/IPCAM先凍結完整IP/source/config並接真DMA/frame/security鏈；
+   缺dependency維持BLOCKED，不能由stub/TLM關閉；ETA未知。
+
+以下15:04表格矩陣紀錄保留；本輪建構與驗證狀態以上方更新為準。
 
 ## 本次實際交付
 
@@ -56,4 +101,5 @@
 
 中央下一次每小時巡檢應比較source hash／PR head／review／test結果，
 有實際進展再更新對應階段；本檔不冒稱持續執行或已完成產品驗收。
+
 
